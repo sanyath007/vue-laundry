@@ -6,6 +6,12 @@
 
     <h2 class="app-title">{{ pageTopic }}</h2>
 
+    <!--<div class="row">
+      <div class="col-md-12">
+
+      </div>
+    </div>-->
+    
     <!--<vue-event-calendar :events="demoEvents"></vue-event-calendar>-->
     <event-calendar :event-datas="eventDatas"></event-calendar>
   </div>

@@ -31,7 +31,7 @@
                     <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                    <li><router-link to="/vehicles">ข้อมูลผ้า</router-link></li>
+                    <li><router-link to="/drapes">ข้อมูลผ้า</router-link></li>
                     <!--<li><router-link to="/drivers">ข้อมูลคนขับรถ (พขร.)</router-link></li>-->
                     <!--<li><a href="#">Something else here</a></li>-->
                     <!--<li role="separator" class="divider"></li>

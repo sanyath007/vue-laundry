@@ -5,10 +5,9 @@ import About from '@/components/About'
 import Contact from '@/components/Contact'
 import Signup from '@/components/Signup'
 import Signin from '@/components/Signin'
-// import ReserveList from '@/components/Reservations/reserve-list'
-// import ReserveDetail from '@/components/Reservations/reserve-detail'
-// import ReserveForm from '@/components/Reservations/reserve-form'
-// import ReserveCancel from '@/components/Reservations/reserve-cancel'
+import DrapeList from '@/components/Drapes/drape-list'
+import DrapeDetail from '@/components/Drapes/drape-detail'
+import DrapeForm from '@/components/Drapes/drape-form'
 
 Vue.use(Router)
 
@@ -19,31 +18,26 @@ export default new Router({
       name: 'Home',
       component: Home
     },
-    // {
-    //   path: '/reservations',
-    //   name: 'ReserveList',
-    //   component: ReserveList
-    // },
-    // {
-    //   path: '/reservation/:id',
-    //   name: 'ReserveDetail',
-    //   component: ReserveDetail
-    // },
-    // {
-    //   path: '/reservation/:id/edit',
-    //   name: 'ReserveForm',
-    //   component: ReserveForm
-    // },
-    // {
-    //   path: '/reserve-cancel',
-    //   name: 'ReserveCancel',
-    //   component: ReserveCancel
-    // },
-    // {
-    //   path: '/reservation',
-    //   name: 'ReserveNew',
-    //   component: ReserveForm
-    // },
+    {
+      path: '/drapes',
+      name: 'DrapeList',
+      component: DrapeList
+    },
+    {
+      path: '/drape/:id',
+      name: 'DrapeDetail',
+      component: DrapeDetail
+    },
+    {
+      path: '/drape/:id/edit',
+      name: 'EditDrape',
+      component: DrapeForm
+    },
+    {
+      path: '/newdrape',
+      name: 'NewDrape',
+      component: DrapeForm
+    },
     {
       path: '/about',
       name: 'About',
