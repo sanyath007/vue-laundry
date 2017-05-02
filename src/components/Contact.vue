@@ -2,7 +2,7 @@
     <div class="container">
       <ol class="breadcrumb">
         <li><a href="#">หน้าหลัก</a></li>
-        <li class="active">{{ msg }}</li>
+        <li class="active">{{ title }}</li>
       </ol>
 
         <form>
@@ -35,7 +35,7 @@ export default {
   name: 'contact',
   data () {
     return {
-      msg: 'ติดต่อเรา'
+      title: 'ติดต่อเรา'
     }
   },
   methods: {

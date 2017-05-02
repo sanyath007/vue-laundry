@@ -20,9 +20,9 @@ export default {
   data () {
     return {
       title: 'หน้าหลัก',
-      pageTopic: 'ตารางการขอใช้รถประจำเดือน',
-      eventDatas: [],
-      demoEvents: []
+      pageTopic: 'ตารางการเบิก-จ่ายผ้าประจำเดือน',
+      eventDatas: [] // Data of fullcalendar events.
+      // demoEvents: []  // Data of vue-event-calendar events.
     }
   },
   components: {

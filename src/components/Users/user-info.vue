@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <h3 class="app-title">{{ msg }}</h3>
+        <h3 class="app-title">{{ title }}</h3>
         <ul>
           <li v-for="user in users">{{user.name}}</li>
         </ul>
@@ -19,7 +19,7 @@ export default {
   props: [ 'users' ],
   data () {
     return {
-      msg: 'User lists'
+      title: 'User lists'
     }
   },
   methods: {

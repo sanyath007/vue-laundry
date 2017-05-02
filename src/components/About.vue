@@ -2,7 +2,7 @@
   <div class="container">
     <ol class="breadcrumb">
       <li><a href="#">หน้าหลัก</a></li>
-      <li class="active">{{ msg }}</li>
+      <li class="active">{{ title }}</li>
     </ol>
 
     <user-info :users="users"></user-info>
@@ -17,7 +17,7 @@ export default {
   name: 'about',
   data () {
     return {
-      msg: 'เกี่ยวกับเรา',
+      title: 'เกี่ยวกับเรา',
       users: []
     }
   },
@@ -29,7 +29,10 @@ export default {
   },
   methods: {
     getUsers () {
-      axios.get('http://localhost/laravel-pos/public/api/users?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2xvY2FsaG9zdFwvbGFyYXZlbC1wb3NcL3B1YmxpY1wvYXBpXC9hdXRoIiwiaWF0IjoxNDkzMTM3ODYzLCJleHAiOjE0OTMxNDE0NjMsIm5iZiI6MTQ5MzEzNzg2MywianRpIjoiNjdjMjAwNmRhNmU1YTRmOWJkMzdhZjNjMTUyYzcxMmYifQ.IQ_ZTmx9cKbwJnBFPFiXT0vgFjUvVpwreNh64T-xf5k', {})
+      const token = localStorage.getItem('token')
+      axios.get('http://localhost/laravel-pos/public/api/users?token=' + token, {
+
+      })
       .then(
         (response) => { this.users = response.data }
       )
