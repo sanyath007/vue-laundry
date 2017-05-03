@@ -19,7 +19,7 @@
             <thead>
                 <tr>
                     <th style="text-align: center;">รหัส</th>
-                    <th style="text-align: center;">รายการ</th>
+                    <th style="text-align: center;">ชื่อรายการ</th>
                     <th style="text-align: center;">ประเภท</th>
                     <th style="text-align: center;">ขนาด</th>
                     <th style="text-align: center;">จำนวน</th>
@@ -36,7 +36,7 @@
                     <td>{{drape.amount}}</td>
                     <td>{{drape.description}}</td>                    
                     <td style="text-align: center;">
-                      <a @click.prevent="updateDrape(drape.id)" class="btn btn-warning">
+                      <a @click.prevent="editDrape(drape.id)" class="btn btn-warning">
                         <i class="fa fa-edit"></i> แก้ไข
                       </a>
                       <a @click.prevent="deleteDrape(drape.id)" class="btn btn-danger">
@@ -53,6 +53,9 @@
 
 <script>
 import axios from 'axios'
+import '../../../node_modules/toastr/build/toastr.min.js'
+
+var toastr = window.toastr = require('toastr')
 
 export default {
   name: 'drape-list',
@@ -79,15 +82,32 @@ export default {
         (error) => console.log(error)
       )
     },
-    updateDrape (_id) {
+    editDrape (_id) {
       console.log(_id)
+      toastr.info('Edit drape ID :' + _id)
     },
     deleteDrape (_id) {
-      console.log(_id)
+      if (confirm('Are you sure to delete drape ID : ' + _id + ' ?')) {
+        const token = localStorage.getItem('token')
+        axios.delete('http://localhost/laravel-pos/public/api/drape/' + _id + '?token=' + token, {})
+        .then(
+          (response) => {
+            console.log(response)
+            toastr.success('Successfully !!!')
+            this.getDrapes()
+          }
+        )
+        .catch(
+          (error) => console.log(error)
+        )
+      }
     }
   }
 }
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
+<style>
+/*Add "scoped" attribute to limit CSS to this component only */
+@import '../../../node_modules/toastr/build/toastr.min.css'
 
 </style>

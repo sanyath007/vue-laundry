@@ -10,70 +10,68 @@
         <h3 class="app-title">{{ title }}</h3>
         
         <form>
-            <!--ผู้ขอ-->
-            <input type="hidden" name="reserve_id" value="">
-            <!--วันที่ขอ-->
-            <input type="hidden" name="reserve_date" value="">
+            <input type="hidden" id="">
 
             <div class="form-group has-feedback">
-                <label for="กิจกรรม">กิจกรรม</label>
-                <input type="text" name="" value="" class="form-control css-require">
+                <label for="ประเภท">ประเภท :</label>
+                <select id="drapeType" v-model="newDrape.drapeType" class="form-control css-require" @change="getNameFromDrapeType($event)">
+                  <option value="">-- กรุณาเลือก --</option>
+                  <option :value="type.drape_type_id" v-for="type in drapeTypes">{{ type.drape_type_name }}</option>
+                </select>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
             <div class="form-group has-feedback">
-                <label for="วันที่ขอ">สถานที่</label>
-                <input type="text" name="" value="" class="form-control css-require">
+                <label for="ขนาด">ขนาด (W x L หน่วย) :</label>
+                <input type="text" 
+                       id="sizeWidth" 
+                       v-model="newDrape.size.sizeWidth" 
+                       class="form-control css-require col-md-4">
+                <input type="text" 
+                       id="sizeLength" 
+                       v-model="newDrape.size.sizeLength" 
+                       class="form-control css-require col-md-4">
+                <select 
+                        id="sizeUnits" 
+                        v-model="newDrape.size.sizeUnit" 
+                        class="form-control css-require" 
+                        @change="showVal($event)">
+                  <option value="">-- กรุณาเลือก --</option>
+                  <option :value="unit" v-for="(unit, index) in sizeUnits">{{ unit }}</option>
+                </select>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
             <div class="form-group has-feedback">
-                <label for="ออกเดินทางวันที่">ออกเดินทางวันที่</label>
-                <!--<div class="input-group date" data-provide="datepicker">
-                    <input type="text" id="fromdate" name="fromdate" class="form-control css-require">
-                    <div class="input-group-addon">
-                        <span class="glyphicon glyphicon-th"></span>
-                    </div>
-                </div>-->
-                <date-picker :startDate="'28/04/2017'" :ctrlName="'fromDate'"></date-picker>
+                <label for="ชื่อรายการ">ชื่อรายการ :</label>
+                <input type="text" id="drapeName" v-model="newDrape.name" class="form-control css-require">
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
             <div class="form-group has-feedback">
-                <label for="กลับวันที่">กลับวันที่</label>
-                <!--<div class="input-group date" data-provide="datepicker">
-                    <input type="text" id="todate" name="todate" class="form-control">
-                    <div class="input-group-addon">
-                        <span class="glyphicon glyphicon-th"></span>
-                    </div>
-                </div>
-                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>-->
-
-                <!--<calendar
-                        :value="value"
-                        :disabled-days-of-week="disabled"
-                        :format="format"
-                        :clear-button="clear"
-                        :placeholder="placeholder"
-                        :pane="2"
-                        :has-input="false"
-                        :on-day-click="onDayClick2"
-                        :special-days="_dateMap"></calendar>-->
-                
-                <!--<calendar> input attribute /'readonly v-model="dateValue" @focus="focus" @blur="blur"'/-->
-                <!--<calendar :show-date-picker.sync="showDatePicker" 
-                          :time.sync="time" 
-                          :date-value.sync="dateValue" 
-                          v-if="showDatePicker" 
-                          transition="calendar">
-                </calendar>-->
-
-                <!--<datepicker :value="state.date" 
-                            input-class="form-control css-require" 
-                            language="th">
-                </datepicker>-->
-                <date-picker :startDate="'28/04/2017'" :ctrlName="'toDate'"></date-picker>
+                <label for="ราคาทุน">ราคาทุน :</label>
+                <input type="text" id="drapeCost" v-model="newDrape.cost" class="form-control">
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <label for="จำนวน">จำนวน :</label>
+                <input type="text" id="drapeAmount" v-model="newDrape.amount" class="form-control">
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <label for="จำนวนต่ำสุด">จำนวนต่ำสุด :</label>
+                <input type="text" id="drapeMinAmt" v-model="newDrape.minAmt" class="form-control">
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <label for="จำนวนใน Stock">จำนวนใน Stock :</label>
+                <input type="text" id="StockAmt" v-model="newDrape.stockAmt" class="form-control">
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <label for="รายละเอียด">รายละเอียด :</label>
+                <textarea id="drapeDescription" v-model="newDrape.description" rows="5" class="form-control"></textarea>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
 
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" @click.prevent="storeDrape">
                 <i class="fa fa-pluse" aria-hidden="true"></i> บันทึก
             </button>
         </form>
@@ -90,77 +88,112 @@ import DatePicker from '../Utils/date-picker'
 // import '../../../node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'
 // import '../../../node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.th.min.js'
 // import '../../../node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js'
+import '../../../node_modules/toastr/build/toastr.min.js'
 
-// var $ = window.jQuery = require('jquery')
+var $ = window.jQuery = require('jquery')
+var toastr = window.toastr = require('toastr')
 
 export default {
   name: 'drape-form',
   props: [ 'users' ],
   data () {
     return {
-      title: 'Create New Drape',
-      vehicles: [],
-      drivers: [],
-      reserves: {
-        reserve_id: '',
-        reserve_date: '',
-        subscriber: '',
-        activity: '',
-        location: ''
-      }
-      // calendar component properties
-      // showDatePicker: false,
-      // dateValue: '',
-      // time: 0,
-      // status: false
+      title: 'เพิ่มรายการ',
+      prefix: '',
+      newDrape: {
+        id: '',
+        name: '',
+        drapeType: '',
+        size: {
+          sizeWidth: 0,
+          sizeLength: 0,
+          sizeUnit: ''
+        },
+        cost: 0.00,
+        amount: 0,
+        minAmt: 0,
+        stockAmt: 0,
+        description: ''
+      },
+      drape: {},
+      drapeTypes: [],
+      sizeUnits: [ 'cm.', 'in.' ]
     }
   },
   components: {
     'date-picker': DatePicker
   },
   created: function () {
-    this.getReservations()
-  },
-  mounted () {
-    // $(document).ready(function () {
-    //   $('#fromdate').datepicker({
-    //     format: 'dd/mm/yyyy',
-    //     language: 'th'
-    //   })
-    //   $('#todate').datepicker().on(
-    //     'changeDate', () => {
-    //       this.startDate = $(this).val()
-    //       console.log(this.startDate)
-    //     }
-    //   )
-    // })
+    var _id = this.$route.params.id
+    if (_id) {
+      this.getDrape(_id)
+    }
+    this.getDrapeType()
   },
   methods: {
-    getReservations () {
-      axios.get('http://localhost/laravel-pos/public/api/reservations?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2xvY2FsaG9zdFwvbGFyYXZlbC1wb3NcL3B1YmxpY1wvYXBpXC9hdXRoIiwiaWF0IjoxNDkzMjU5NjIwLCJleHAiOjE0OTMyNjMyMjAsIm5iZiI6MTQ5MzI1OTYyMCwianRpIjoiMGI0Y2QyZWQwYjg2NzQzZjQzOTA1MjFhMmEwMTYxYWEifQ.fGe9SYKoy_UGoBQKZNHyNmPZRCnriJPRUdGeqYtLs0g', {})
+    getDrapeType (_id) {
+      const token = localStorage.getItem('token')
+      axios.get('http://localhost/laravel-pos/public/api/drapetypes?token=' + token, {})
       .then(
         (response) => {
-          this.reserves = response.data
+          this.drapeTypes = response.data
         }
       )
       .catch(
         (error) => console.log(error)
       )
+    },
+    getNameFromDrapeType (e) {
+      this.prefix = $(e.target.options[this.newDrape.drapeType]).text()
+      this.newDrape.name = this.prefix
+    },
+    getDrape (_id) {
+      const token = localStorage.getItem('token')
+      axios.get('http://localhost/laravel-pos/public/api/drape/' + _id + '?token=' + token, {})
+      .then(
+        (response) => {
+          this.drape = response.data
+        }
+      )
+      .catch(
+        (error) => console.log(error)
+      )
+    },
+    storeDrape () {
+      const token = localStorage.getItem('token')
+      var data = {
+        name: this.newDrape.name,
+        drapeType: this.newDrape.drapeType,
+        size: this.newDrape.size.sizeWidth + 'x' + this.newDrape.size.sizeLength + ' ' + this.newDrape.size.sizeUnit,
+        cost: this.newDrape.cost,
+        amount: this.newDrape.amount,
+        minAmt: this.newDrape.minAmt,
+        stockAmt: this.newDrape.stockAmt,
+        description: this.newDrape.description
+      }
+      console.log(data)
+      axios.post('http://localhost/laravel-pos/public/api/drape', data, {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          Authorization: 'Bearer ' + token
+        }
+      })
+      .then(
+        (response) => {
+          console.log(response)
+          toastr.success(response.data.text)
+        }
+      )
+      .catch(
+        (error) => console.log(error)
+      )
+    },
+    showVal (e) {
+      console.log(e)
+      console.log(this.newDrape.size.sizeUnit)
+      this.prefix += ' ' + this.newDrape.size.sizeWidth + 'x' + this.newDrape.size.sizeLength + ' ' + this.newDrape.size.sizeUnit
+      this.newDrape.name = this.prefix
     }
-    // onStartDatetimeChanged: function (newStart) {
-    //   var endPicker = this.$.endPicker.control
-    //   endPicker.minDate(newStart)
-    // }
-    // calendar component event listener functions
-    // focus () {
-    //   this.showDatePicker = true
-    // },
-    // blur () {
-    //   if (this.status) {
-    //     return
-    //   }
-    //   this.showDatePicker = false
-    // }
   }
 }
 </script>
@@ -168,5 +201,6 @@ export default {
 <style>
  /*Add "scoped" attribute to limit CSS to this component only */
 /*@import '../../../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css';*/
+@import '../../../node_modules/toastr/build/toastr.min.css'
 
 </style>
