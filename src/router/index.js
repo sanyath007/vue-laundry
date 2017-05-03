@@ -8,6 +8,9 @@ import Signin from '@/components/Signin'
 import DrapeList from '@/components/Drapes/drape-list'
 import DrapeDetail from '@/components/Drapes/drape-detail'
 import DrapeForm from '@/components/Drapes/drape-form'
+import SetList from '@/components/Sets/set-list'
+import SetDetail from '@/components/Sets/set-detail'
+import SetForm from '@/components/Sets/set-form'
 
 Vue.use(Router)
 
@@ -34,9 +37,24 @@ export default new Router({
       component: DrapeForm
     },
     {
-      path: '/newdrape',
-      name: 'NewDrape',
-      component: DrapeForm
+      path: '/newset',
+      name: 'NewSet',
+      component: SetForm
+    },
+    {
+      path: '/sets',
+      name: 'SetList',
+      component: SetList
+    },
+    {
+      path: '/set/:id',
+      name: 'SetDetail',
+      component: SetDetail
+    },
+    {
+      path: '/set/:id/edit',
+      name: 'EditSet',
+      component: SetForm
     },
     {
       path: '/about',

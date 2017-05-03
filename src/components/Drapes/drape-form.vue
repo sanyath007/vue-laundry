@@ -201,6 +201,6 @@ export default {
 <style>
  /*Add "scoped" attribute to limit CSS to this component only */
 /*@import '../../../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css';*/
-@import '../../../node_modules/toastr/build/toastr.min.css'
+@import '../../../node_modules/toastr/build/toastr.min.css';
 
 </style>

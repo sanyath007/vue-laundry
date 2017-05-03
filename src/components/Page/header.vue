@@ -32,7 +32,7 @@
                     </a>
                     <ul class="dropdown-menu">
                     <li><router-link to="/drapes">ข้อมูลผ้า</router-link></li>
-                    <!--<li><router-link to="/drivers">ข้อมูลคนขับรถ (พขร.)</router-link></li>-->
+                    <li><router-link to="/sets">ข้อมูล Set ผ้า</router-link></li>
                     <!--<li><a href="#">Something else here</a></li>-->
                     <!--<li role="separator" class="divider"></li>
                     <li><a href="#">Separated link</a></li>
@@ -50,7 +50,7 @@
                 </template>
                 <li class="dropdown" v-if="!isGuest">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        Admin
+                        {{ userOnline }}
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
@@ -66,16 +66,24 @@
 <script>
 export default {
   name: 'home',
+  props: [ 'userOnline', 'isGuest' ],
   data () {
     return {
-      msg: 'App Header',
-      isGuest: false
+      title: 'App Header'
+    //   isGuest: false
     }
+  },
+  created () {
+    console.log(this.userOnline)
+    console.log(this.isGuest)
+  },
+  updated () {
+    console.log(this.userOnline)
+    console.log(this.isGuest)
   },
   methods: {
     logout () {
-      this.isGuest = true
-      console.log(this.isGuest)
+      this.$emit('isUserOnline')
     }
   }
 }

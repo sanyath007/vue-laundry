@@ -19,11 +19,11 @@
             <thead>
                 <tr>
                     <th style="text-align: center;">รหัส</th>
-                    <th style="text-align: center;">ชื่อรายการ</th>
+                    <th>ชื่อรายการ</th>
                     <th style="text-align: center;">ประเภท</th>
                     <th style="text-align: center;">ขนาด</th>
                     <th style="text-align: center;">จำนวน</th>
-                    <th style="text-align: center;">รายละเอียด</th>
+                    <th>รายละเอียด</th>
                     <th style="text-align: center;">Actions</th>
                 </tr>
             </thead>
@@ -108,6 +108,6 @@ export default {
 
 <style>
 /*Add "scoped" attribute to limit CSS to this component only */
-@import '../../../node_modules/toastr/build/toastr.min.css'
+@import '../../../node_modules/toastr/build/toastr.min.css';
 
 </style>
