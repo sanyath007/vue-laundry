@@ -1,9 +1,5 @@
 # vue-laundry
-Laundry System with VueJS 2+
-
-# laundry
-
-> A Vue.js project
+> Laundry System with VueJS 2+
 
 ## Build Setup
 
