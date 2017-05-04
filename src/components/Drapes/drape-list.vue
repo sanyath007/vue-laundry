@@ -15,6 +15,16 @@
       <div class="col-md-12">
         <h3 class="app-title">{{ title }}</h3>
         
+        <div class="form-group">
+          <label for="ค้นหา">Search :</label>
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+              <button class="btn btn-secondary" type="button">Go</button>
+            </span>
+          </div>
+        </div>
+
         <table class="table table-strips table-hover">
             <thead>
                 <tr>
@@ -46,6 +56,25 @@
                 </tr>
             </tbody>
         </table>
+
+        <ul class="pagination">
+          <li v-bind:class="{disabled: pager.current_page === 1}">
+            <a @click.prevent="renderListView(1)">First</a>
+            </li>
+          <li v-bind:class="{disabled: pager.current_page === 1}">
+            <a @click.prevent="renderListView(pager.current_page - 1)">Prev</a>
+            </li>
+          <li v-bind:class="{active: pager.current_page === (index + 1)}" 
+              v-for="(page, index) in pager.last_page">
+            <a @click.prevent="renderListView((index + 1))">{{ (index + 1) }}</a>
+          </li>
+          <li v-bind:class="{disabled: pager.current_page === pager.last_page}">
+            <a @click.prevent="renderListView(pager.current_page + 1)">Next</a>
+            </li>
+          <li v-bind:class="{disabled: pager.current_page === pager.last_page}">
+            <a @click.prevent="renderListView(pager.last_page)">Last</a>
+            </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -63,7 +92,8 @@ export default {
   data () {
     return {
       title: 'ข้อมูลผ้า',
-      drapes: []
+      drapes: [],
+      pager: {}
     }
   },
   created: function () {
@@ -75,7 +105,10 @@ export default {
       axios.get('http://localhost/laravel-pos/public/api/drapes?token=' + token, {})
       .then(
         (response) => {
-          this.drapes = response.data
+          this.drapes = response.data.data
+          this.pager = response.data
+          console.log(this.drapes)
+          console.log(this.pager)
         }
       )
       .catch(
@@ -101,6 +134,24 @@ export default {
           (error) => console.log(error)
         )
       }
+    },
+    renderListView (_page) {
+      const pagerUrl = 'http://localhost/laravel-pos/public/api/drapes?page=' + _page
+      toastr.success(pagerUrl)
+
+      // const token = localStorage.getItem('token')
+      axios.get(pagerUrl, {})
+      .then(
+        (response) => {
+          this.drapes = response.data.data
+          this.pager = response.data
+          console.log(this.drapes)
+          console.log(this.pager)
+        }
+      )
+      .catch(
+        (error) => console.log(error)
+      )
     }
   }
 }
