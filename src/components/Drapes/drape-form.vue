@@ -171,7 +171,6 @@ export default {
         stockAmt: this.newDrape.stockAmt,
         description: this.newDrape.description
       }
-      console.log(data)
       axios.post('http://localhost/laravel-pos/public/api/drape', data, {
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
@@ -189,10 +188,7 @@ export default {
       )
     },
     showVal (e) {
-      console.log(e)
-      console.log(this.newDrape.size.sizeUnit)
-      this.prefix += ' ' + this.newDrape.size.sizeWidth + 'x' + this.newDrape.size.sizeLength + ' ' + this.newDrape.size.sizeUnit
-      this.newDrape.name = this.prefix
+      this.newDrape.name = this.prefix + ' ' + this.newDrape.size.sizeWidth + 'x' + this.newDrape.size.sizeLength + ' ' + this.newDrape.size.sizeUnit
     }
   }
 }

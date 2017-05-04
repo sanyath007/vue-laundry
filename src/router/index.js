@@ -37,9 +37,9 @@ export default new Router({
       component: DrapeForm
     },
     {
-      path: '/newset',
-      name: 'NewSet',
-      component: SetForm
+      path: '/newdrape',
+      name: 'NewDrape',
+      component: DrapeForm
     },
     {
       path: '/sets',
@@ -54,6 +54,11 @@ export default new Router({
     {
       path: '/set/:id/edit',
       name: 'EditSet',
+      component: SetForm
+    },
+    {
+      path: '/newset',
+      name: 'NewSet',
       component: SetForm
     },
     {
