@@ -7,7 +7,7 @@
 
     <div class="row">
       <div class="col-md-12">
-        <router-link to="/newdrape" class="btn btn-primary">เพิ่มรายการ</router-link>
+        <router-link to="/newbring" class="btn btn-primary">เพิ่มรายการ</router-link>
       </div>
     </div>
 
@@ -83,6 +83,7 @@
           </ul>
         </div>
 
+
       </div>
     </div>
   </div>
@@ -97,11 +98,11 @@ var $ = window.jQuery = require('jquery')
 var toastr = window.toastr = require('toastr')
 
 export default {
-  name: 'drape-list',
+  name: 'bring-list',
   props: [ 'users' ],
   data () {
     return {
-      title: 'ข้อมูลผ้า',
+      title: 'รายการเบิก',
       drapes: [],
       tmpDrapes: [],
       pager: {},

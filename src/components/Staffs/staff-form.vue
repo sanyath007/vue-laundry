@@ -94,11 +94,11 @@ var $ = window.jQuery = require('jquery')
 var toastr = window.toastr = require('toastr')
 
 export default {
-  name: 'drape-form',
+  name: 'set-form',
   props: [ 'users' ],
   data () {
     return {
-      title: 'เพิ่มรายการผ้า',
+      title: 'เพิ่ม Set ผ้า',
       prefix: '',
       newDrape: {
         id: '',
@@ -171,6 +171,7 @@ export default {
         stockAmt: this.newDrape.stockAmt,
         description: this.newDrape.description
       }
+      console.log(data)
       axios.post('http://localhost/laravel-pos/public/api/drape', data, {
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
@@ -188,7 +189,10 @@ export default {
       )
     },
     showVal (e) {
-      this.newDrape.name = this.prefix + ' ' + this.newDrape.size.sizeWidth + 'x' + this.newDrape.size.sizeLength + ' ' + this.newDrape.size.sizeUnit
+      console.log(e)
+      console.log(this.newDrape.size.sizeUnit)
+      this.prefix += ' ' + this.newDrape.size.sizeWidth + 'x' + this.newDrape.size.sizeLength + ' ' + this.newDrape.size.sizeUnit
+      this.newDrape.name = this.prefix
     }
   }
 }
@@ -197,6 +201,6 @@ export default {
 <style>
  /*Add "scoped" attribute to limit CSS to this component only */
 /*@import '../../../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css';*/
-@import '../../../node_modules/toastr/build/toastr.min.css';
+@import '../../../node_modules/toastr/build/toastr.min.css'
 
 </style>

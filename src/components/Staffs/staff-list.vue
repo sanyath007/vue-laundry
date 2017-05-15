@@ -7,7 +7,7 @@
 
       <div class="row">
           <div class="col-md-12">
-              <router-link to="/newset" class="btn btn-primary">เพิ่ม Set ผ้า</router-link>
+              <router-link to="/newstaff" class="btn btn-primary">เพิ่ม Staff</router-link>
           </div>
       </div>
 
@@ -25,15 +25,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="set in sets">
-                    <td style="text-align: center;">{{ set.set_id }}</td>
-                    <td>{{ set.set_name }}</td>
-                    <td>{{ set.set_desc }}</td>
+                <tr v-for="staff in staffs">
+                    <td style="text-align: center;">{{ staff.person_id }}</td>
+                    <td>{{ staff.comment }}</td>
+                    <td>{{ staff.status }}</td>
                     <td style="text-align: center;">
-                      <a @click.prevent="updateSet(set.set_id)" class="btn btn-warning">
+                      <a @click.prevent="updateSet(staff.person_id)" class="btn btn-warning">
                         <i class="fa fa-edit"></i>
                       </a>
-                      <a @click.prevent="deleteSet(set.set_id)" class="btn btn-danger">
+                      <a @click.prevent="deleteSet(staff.person_id)" class="btn btn-danger">
                         <i class="fa fa-remove"></i>
                       </a>
                     </td>
@@ -83,26 +83,26 @@ import '../../../node_modules/toastr/build/toastr.min.js'
 var toastr = window.toastr = require('toastr')
 
 export default {
-  name: 'set-list',
+  name: 'staff-list',
   props: [ 'users' ],
   data () {
     return {
-      title: 'ข้อมูล Set ผ้า',
-      sets: [],
+      title: 'ข้อมูล Staff',
+      staffs: [],
       pager: {},
       filterKey: ''
     }
   },
   created: function () {
-    this.getSets()
+    this.getStaffs()
   },
   methods: {
-    getSets () {
+    getStaffs () {
       const token = localStorage.getItem('token')
-      axios.get('http://localhost/laravel-pos/public/api/sets?token=' + token, {})
+      axios.get('http://localhost/laravel-pos/public/api/staffs?token=' + token, {})
       .then(
         (response) => {
-          this.sets = response.data.data
+          this.staffs = response.data.data
           this.pager = response.data
         }
       )

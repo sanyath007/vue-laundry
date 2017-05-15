@@ -11,6 +11,9 @@ import DrapeForm from '@/components/Drapes/drape-form'
 import SetList from '@/components/Sets/set-list'
 import SetDetail from '@/components/Sets/set-detail'
 import SetForm from '@/components/Sets/set-form'
+import BringList from '@/components/Brings/bring-list'
+import BringForm from '@/components/Brings/bring-form'
+import StaffList from '@/components/Staffs/staff-list'
 
 Vue.use(Router)
 
@@ -20,6 +23,16 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/brings',
+      name: 'BringList',
+      component: BringList
+    },
+    {
+      path: '/newbring',
+      name: 'BringForm',
+      component: BringForm
     },
     {
       path: '/drapes',
@@ -60,6 +73,11 @@ export default new Router({
       path: '/newset',
       name: 'NewSet',
       component: SetForm
+    },
+    {
+      path: '/staffs',
+      name: 'StaffList',
+      component: StaffList
     },
     {
       path: '/about',

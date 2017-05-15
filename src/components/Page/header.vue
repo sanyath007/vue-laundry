@@ -20,7 +20,7 @@
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
-                    <li><router-link to="/reservations">รายการการเบิกผ้า</router-link></li>
+                    <li><router-link to="/brings">รายการการเบิกผ้า</router-link></li>
                     <!--<li><router-link to="/reservation">ขอใช้รถ</router-link></li>                    
                     <li><router-link to="/reserve-cancel">ยกเลิกขอใช้รถ</router-link></li>                    -->
                   </ul>
@@ -34,9 +34,9 @@
                     <li><router-link to="/drapes">ข้อมูลผ้า</router-link></li>
                     <li><router-link to="/sets">ข้อมูล Set ผ้า</router-link></li>
                     <!--<li><a href="#">Something else here</a></li>-->
-                    <!--<li role="separator" class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
                     <li role="separator" class="divider"></li>
+                    <li><router-link to="/staffs">ข้อมูล Staff</router-link></li>
+                    <!--<li role="separator" class="divider"></li>
                     <li><a href="#">One more separated link</a></li>-->
                     </ul>
                 </li>                
