@@ -59,6 +59,7 @@ export default {
   },
   methods: {
     add (_item, _amt) {
+      this.reset()
       _item.amt = _amt
       this.$emit('addItem', _item)
     },
@@ -67,6 +68,9 @@ export default {
     },
     decrease () {
       this.itemAmount--
+    },
+    reset () {
+      this.itemAmount = 10
     }
   }
 }

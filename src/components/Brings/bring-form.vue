@@ -88,10 +88,6 @@ export default {
     'info-dialog': InfoDialog
   },
   created: function () {
-    // var _id = this.$route.params.id
-    // if (_id) {
-    //   this.getDrape(_id)
-    // }
     this.getSets()
     this.getDrapeTypes()
     this.getDrapes()
@@ -153,9 +149,9 @@ export default {
         depart_id: '1',
         bring_status: '1'
       }
-      var detail = []
+      var details = []
       this.carts.forEach((cart, index) => {
-        detail.push({
+        details.push({
           item_id: cart.id,
           item_type: cart.type,
           bring_amt: cart.amt,
@@ -164,10 +160,10 @@ export default {
       })
       var data = {
         bring: bring,
-        detail: detail
+        details: details
       }
       console.log(data)
-      axios.post('http://localhost/laravel-pos/public/api/drape', data, {
+      axios.post('http://localhost/laravel-pos/public/api/bring', data, {
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
           Authorization: 'Bearer ' + token

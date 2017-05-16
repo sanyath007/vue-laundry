@@ -24,28 +24,32 @@
           <thead>
             <tr>
               <th style="text-align: center;">รหัส</th>
-              <th>ชื่อรายการ</th>
-              <th style="text-align: center;">ประเภท</th>
-              <th style="text-align: center;">ขนาด</th>
-              <th style="text-align: center;">จำนวน</th>
-              <th>รายละเอียด</th>
+              <th style="text-align: center;">วันที่เบิก</th>
+              <th>ผู้เบิก</th>
+              <th>หน่วยงาน</th>
+              <th style="text-align: center;">สถานะ</th>
+              <th style="text-align: center; width: 10%;">รายการ</th>
               <th style="text-align: center; width: 15%;">Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="drape in drapes">
-              <td style="text-align: center;">{{drape.id}}</td>
-              <td>{{drape.name}}</td>
-              <td>{{drape.drape_type}}</td>
-              <td>{{drape.size}}</td>
-              <td>{{drape.amount}}</td>
-              <td>{{drape.description}}</td>
+            <tr v-for="(bring, index) in brings">
+              <td style="text-align: center;">{{ index + 1 }}</td>
+              <td style="text-align: center;">{{ bring.bring_date }}</td>
+              <td>{{ bring.user_id }}</td>
+              <td>{{ bring.department.ward_name }}</td>
+              <td style="text-align: center;">{{ bring.bring_status }}</td>
               <td style="text-align: center;">
-                <a @click.prevent="editDrape(drape.id)" class="btn btn-warning">
-                  <i class="fa fa-edit"></i>
+                <a class="btn btn-info">
+                  <i class="fa fa-list" aria-hidden="true"></i>
                 </a>
-                <a @click.prevent="deleteDrape(drape.id)" class="btn btn-danger">
-                  <i class="fa fa-remove"></i>
+              </td>
+              <td style="text-align: center;">
+                <a @click.prevent="editDrape(bring.bring_id)" class="btn btn-warning">
+                  <i class="fa fa-edit" aria-hidden="true"></i>
+                </a>
+                <a @click.prevent="deleteDrape(bring.bring_id)" class="btn btn-danger">
+                  <i class="fa fa-remove" aria-hidden="true"></i>
                 </a>
               </td>
             </tr>
@@ -103,43 +107,44 @@ export default {
   data () {
     return {
       title: 'รายการเบิก',
-      drapes: [],
-      tmpDrapes: [],
+      brings: [],
+      tmpBrings: [],
       pager: {},
       filterKey: ''
     }
   },
   created: function () {
-    this.getDrapes()
+    this.getBrings()
   },
   methods: {
-    getDrapes () {
+    getBrings () {
       var name = this.filterKey
       const token = localStorage.getItem('token')
-      axios.get('http://localhost/laravel-pos/public/api/drapes?token=' + token + '&name=' + name, {})
+      axios.get('http://localhost/laravel-pos/public/api/brings?token=' + token + '&name=' + name, {})
       .then(
         (response) => {
-          this.drapes = response.data.data
-          this.pager = response.data
+          console.log(response.data)
+          this.brings = response.data
+          // this.pager = response.data
         }
       )
       .catch(
         (error) => console.log(error)
       )
     },
-    editDrape (_id) {
+    editBring (_id) {
       console.log(_id)
-      toastr.info('Edit drape ID :' + _id)
+      toastr.info('Edit set ID :' + _id)
     },
-    deleteDrape (_id) {
-      if (confirm('Are you sure to delete drape ID : ' + _id + ' ?')) {
+    deleteBring (_id) {
+      if (confirm('Are you sure to delete set ID : ' + _id + ' ?')) {
         const token = localStorage.getItem('token')
-        axios.delete('http://localhost/laravel-pos/public/api/drape/' + _id + '?token=' + token, {})
+        axios.delete('http://localhost/laravel-pos/public/api/set/' + _id + '?token=' + token, {})
         .then(
           (response) => {
             console.log(response)
             toastr.success('Successfully !!!')
-            this.getDrapes()
+            this.getBrings()
           }
         )
         .catch(
@@ -149,14 +154,14 @@ export default {
     },
     renderListView (_page) {
       var name = this.filterKey
-      const pagerUrl = 'http://localhost/laravel-pos/public/api/drapes?page=' + _page + '&name=' + name
+      const pagerUrl = 'http://localhost/laravel-pos/public/api/sets?page=' + _page + '&name=' + name
       toastr.success(pagerUrl)
 
       // const token = localStorage.getItem('token')
       axios.get(pagerUrl, {})
       .then(
         (response) => {
-          this.drapes = response.data.data
+          this.sets = response.data.data
           this.pager = response.data
         }
       )
@@ -172,13 +177,13 @@ export default {
       }
 
       /** Search from dataset */
-      // this.drapes = this.pager.data
-      // this.drapes = _.filter(this.drapes, drape => {
-      //   return _.lowerCase(drape.name).indexOf(_.lowerCase(this.filterKey)) >= 0
+      // this.brings = this.pager.data
+      // this.brings = _.fiter(this.brings, bring = {
+     //   return _.lowerCase(bring.name).idexOf(_.lowerCase(this.filterKey)) >= 0
       // })
 
       /** Search from database */
-      this.getDrapes()
+      this.getBrings()
     }
   }
 }

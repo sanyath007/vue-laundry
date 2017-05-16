@@ -6,11 +6,12 @@
 
     <h2 class="app-title">{{ pageTopic }}</h2>
 
-    <!--<div class="row">
+    <div class="row">
       <div class="col-md-12">
-
+        Latitude : {{ position.latitude }} <br>
+        Longitude : {{ position.longitude }}
       </div>
-    </div>-->
+    </div>
     
     <!--<vue-event-calendar :events="demoEvents"></vue-event-calendar>-->
     <event-calendar :event-datas="eventDatas"></event-calendar>
@@ -20,6 +21,10 @@
 <script>
 import axios from 'axios'
 import EventCalendar from './Utils/event-calendar'
+import '../../node_modules/toastr/build/toastr.min.js'
+
+// var $ = window.jQuery = require('jquery')
+var toastr = window.toastr = require('toastr')
 
 export default {
   name: 'home',
@@ -27,8 +32,9 @@ export default {
     return {
       title: 'หน้าหลัก',
       pageTopic: 'ตารางการเบิก-จ่ายผ้าประจำเดือน',
-      eventDatas: [] // Data of fullcalendar events.
+      eventDatas: [], // Data of fullcalendar events.
       // demoEvents: []  // Data of vue-event-calendar events.
+      position: {}
     }
   },
   components: {
@@ -36,6 +42,13 @@ export default {
   },
   created () {
     this.getEventDatas()
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.position = position.coords
+      })
+    } else {
+      toastr.error('Could not use this function !!!')
+    }
   },
   methods: {
     getEventDatas () {
@@ -69,5 +82,7 @@ export default {
 
 <style>
  /*Add "scoped" attribute to limit CSS to this component only */
+
+ @import '../../node_modules/toastr/build/toastr.min.css';
 
 </style>
