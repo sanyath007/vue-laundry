@@ -7,9 +7,28 @@
       <div class="card-content">
         <span class="card-title">{{ item.name }}</span>
         <p>{{ item.desc }}</p>
-        <a v-on:click.prevent="add(item)" class="btn btn-primary">
-          <i class="fa fa-cart-plus" aria-hidden="true"></i> Add
-        </a>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group spinner">
+              <input type="text" class="form-control" v-model="itemAmount">
+              <div class="input-group-btn-vertical">
+                <button type="button" class="btn btn-default" @click="increase">
+                  <i class="fa fa-caret-up"></i>
+                </button>
+                <button type="button" class="btn btn-default" @click="decrease">
+                  <i class="fa fa-caret-down"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <a v-on:click.prevent="add(item, itemAmount)" class="btn btn-primary pull-right">
+              <i class="fa fa-cart-plus" aria-hidden="true"></i> Add
+            </a>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -29,7 +48,8 @@ export default {
     return {
       title: 'Card List',
       imgPath: '/static/img/',
-      defaultImg: 'materialdesign_introduction.png'
+      defaultImg: 'materialdesign_introduction.png',
+      itemAmount: 10
     }
   },
   computed: {
@@ -38,8 +58,15 @@ export default {
     }
   },
   methods: {
-    add (_item) {
-      this.$emit('addItem')
+    add (_item, _amt) {
+      _item.amt = _amt
+      this.$emit('addItem', _item)
+    },
+    increase () {
+      this.itemAmount++
+    },
+    decrease () {
+      this.itemAmount--
     }
   }
 }
@@ -83,6 +110,48 @@ export default {
 
   .card .card-content .card-title {
     line-height: 48px;
+  }
+
+  .spinner {
+    width: 100px;
+  }
+
+  .spinner input {
+    text-align: right;
+  }
+
+  .input-group-btn-vertical {
+    position: relative;
+    white-space: nowrap;
+    width: 1%;
+    vertical-align: middle;
+    display: table-cell;
+  }
+
+  .input-group-btn-vertical>.btn {
+    display: block;
+    float: none;
+    width: 100%;
+    max-width: 100%;
+    padding: 8px;
+    margin-left: -1px;
+    position: relative;
+    border-radius: 0;
+  }
+
+  .input-group-btn-vertical>.btn:first-child {
+    border-top-right-radius: 4px;
+  }
+
+  .input-group-btn-vertical>.btn:last-child {
+    margin-top: -2px;
+    border-bottom-right-radius: 4px;
+  }
+
+  .input-group-btn-vertical i {
+    position: absolute;
+    top: 0;
+    left: 4px;
   }
 
 </style>

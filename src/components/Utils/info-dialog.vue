@@ -11,26 +11,24 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th style="text-align:center;">ID</th>
-                  <th>Name</th>
-                  <th style="text-align:center;">Type</th>
-                  <th style="text-align:center;">Img</th>
-                  <th style="text-align:center;">Amount</th>
+                  <th style="text-align:center;">#</th>
+                  <th>รายการ</th>
+                  <th style="text-align:center;">ประเภท</th>
+                  <th style="text-align:center;">จำนวน</th>
                   <th style="text-align:center;">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="content in contents">
-                  <td style="text-align:center;">{{ content.id }}</td>
+                <tr v-for="(content, index) in contents">
+                  <td style="text-align:center;">{{ index + 1 }}</td>
                   <td>{{ content.name }}</td>
-                  <td>{{ content.type }}</td>
-                  <td style="text-align:center;">{{ content.img }}</td>
-                  <td style="text-align:center;">0</td>
+                  <td style="text-align:center;">{{ content.type }}</td>
+                  <td style="text-align:center;">{{ content.amt }}</td>
                   <td style="text-align:center;">
-                    <a class="btn btn-warning">
+                    <!--<a class="btn btn-warning">
                       <i class="fa fa-edit" aria-hidden="true"></i>
-                    </a>
-                    <a class="btn btn-danger">
+                    </a>-->
+                    <a class="btn btn-danger" @click.prevent="remove(content)">
                       <i class="fa fa-remove" aria-hidden="true"></i>
                     </a>
                   </td>
@@ -72,6 +70,9 @@ export default {
     },
     save () {
       this.$emit('actionSave')
+    },
+    remove (_item) {
+      this.$emit('actionRemove', _item)
     }
   }
 }
