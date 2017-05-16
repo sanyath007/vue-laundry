@@ -15,7 +15,7 @@
                   <th>รายการ</th>
                   <th style="text-align:center;">ประเภท</th>
                   <th style="text-align:center;">จำนวน</th>
-                  <th style="text-align:center;">Actions</th>
+                  <th style="text-align:center;" v-show="options.tbActions">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -24,7 +24,7 @@
                   <td>{{ content.name }}</td>
                   <td style="text-align:center;">{{ content.type }}</td>
                   <td style="text-align:center;">{{ content.amt }}</td>
-                  <td style="text-align:center;">
+                  <td style="text-align:center;" v-show="options.tbActions">
                     <!--<a class="btn btn-warning">
                       <i class="fa fa-edit" aria-hidden="true"></i>
                     </a>-->
@@ -38,7 +38,7 @@
           </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="save">Save</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="save" v-show="options.btnSave">Save</button>
           <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="toggle">Close</button>
         </div>
       </div>

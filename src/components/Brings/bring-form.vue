@@ -79,7 +79,9 @@ export default {
       carts: [],
       showDialog: false,
       modalOptions: {
-        title: 'รายการที่คุณเลือกทั้งหมด'
+        title: 'รายการที่คุณเลือกทั้งหมด',
+        tbActions: true,
+        btnSave: true
       }
     }
   },

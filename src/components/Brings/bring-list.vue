@@ -23,7 +23,7 @@
         <table class="table table-strips table-hover">
           <thead>
             <tr>
-              <th style="text-align: center;">รหัส</th>
+              <th style="text-align: center; width: 5%;">รหัส</th>
               <th style="text-align: center;">วันที่เบิก</th>
               <th>ผู้เบิก</th>
               <th>หน่วยงาน</th>
@@ -40,9 +40,14 @@
               <td>{{ bring.department.ward_name }}</td>
               <td style="text-align: center;">{{ bring.bring_status }}</td>
               <td style="text-align: center;">
-                <a class="btn btn-info">
+                <a class="btn btn-info" v-on:click.prevent="modalToggle(bring.bring_detail)">
                   <i class="fa fa-list" aria-hidden="true"></i>
                 </a>
+                <!--<ul>
+                  <li v-for="detail in bring.bring_detail">
+                    {{ detail.item_type }} = {{ detail.bring_amt }}
+                  </li>
+                </ul>-->
               </td>
               <td style="text-align: center;">
                 <a @click.prevent="editDrape(bring.bring_id)" class="btn btn-warning">
@@ -68,7 +73,7 @@
             </li>
             <li v-bind:class="{disabled: pager.current_page === 1}">
               <a @click.prevent="renderListView(pager.current_page - 1)">
-                <i class="fa fa-angle-left" aria-hidden="true"></i>  
+                <i class="fa fa-angle-left" aria-hidden="true"></i>
               </a>
             </li>
             <li v-bind:class="{active: pager.current_page === (index + 1)}" v-for="(page, index) in pager.last_page">
@@ -87,15 +92,19 @@
           </ul>
         </div>
 
-
       </div>
     </div>
+
+    <!--Modal show cart detail-->
+    <info-dialog :isShow="showDialog" :contents="bringDetails" :options="modalOptions" @showToggle="modalToggle">
+    </info-dialog>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 // import _ from 'lodash'
+import InfoDialog from '../Utils/info-dialog'
 import '../../../node_modules/toastr/build/toastr.min.js'
 
 var $ = window.jQuery = require('jquery')
@@ -108,10 +117,20 @@ export default {
     return {
       title: 'รายการเบิก',
       brings: [],
+      bringDetails: [],
       tmpBrings: [],
       pager: {},
-      filterKey: ''
+      filterKey: '',
+      showDialog: false,
+      modalOptions: {
+        title: 'รายการเบิกทั้งหมด',
+        tbActions: false,
+        btnSave: false
+      }
     }
+  },
+  components: {
+    'info-dialog': InfoDialog
   },
   created: function () {
     this.getBrings()
@@ -123,14 +142,54 @@ export default {
       axios.get('http://localhost/laravel-pos/public/api/brings?token=' + token + '&name=' + name, {})
       .then(
         (response) => {
-          console.log(response.data)
-          this.brings = response.data
-          // this.pager = response.data
+          this.brings = response.data.data
+          this.pager = response.data
         }
       )
       .catch(
         (error) => console.log(error)
       )
+    },
+    setDetail (_details) {
+      // var _items = []
+      // const token = localStorage.getItem('token')
+      _details.forEach((key, index) => {
+        if (key.item_type === 'Set') {
+          axios.get('http://localhost/laravel-pos/public/api/set/' + key.item_id, {})
+          .then(
+            (response) => {
+              this.bringDetails.push({
+                id: key.item_id,
+                name: response.data.map((set) => set.set_name)[0],
+                desc: key.comment,
+                type: key.item_type,
+                img: '',
+                amt: key.bring_amt
+              })
+            }
+          )
+          .catch(
+            (error) => console.log(error)
+          )
+        } else {
+          axios.get('http://localhost/laravel-pos/public/api/drape/' + key.item_id, {})
+          .then(
+            (response) => {
+              this.bringDetails.push({
+                id: key.item_id,
+                name: response.data.name,
+                desc: key.comment,
+                type: key.item_type,
+                img: '',
+                amt: key.bring_amt
+              })
+            }
+          )
+          .catch(
+            (error) => console.log(error)
+          )
+        }
+      })
     },
     editBring (_id) {
       console.log(_id)
@@ -184,6 +243,15 @@ export default {
 
       /** Search from database */
       this.getBrings()
+    },
+    modalToggle (_items) {
+      this.showDialog = !this.showDialog
+
+      if (_items) {
+        this.setDetail(_items)
+      } else {
+        this.bringDetails = []
+      }
     }
   }
 }
