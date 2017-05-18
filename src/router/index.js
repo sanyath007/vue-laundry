@@ -13,7 +13,10 @@ import SetDetail from '@/components/Sets/set-detail'
 import SetForm from '@/components/Sets/set-form'
 import BringList from '@/components/Brings/bring-list'
 import BringForm from '@/components/Brings/bring-form'
+import DispenseList from '@/components/dispenses/dispense-list'
+import DispenseForm from '@/components/dispenses/dispense-form'
 import StaffList from '@/components/Staffs/staff-list'
+import StoreList from '@/components/Stores/store-list'
 
 Vue.use(Router)
 
@@ -33,6 +36,16 @@ export default new Router({
       path: '/newbring',
       name: 'BringForm',
       component: BringForm
+    },
+    {
+      path: '/dispenses',
+      name: 'DispenseList',
+      component: DispenseList
+    },
+    {
+      path: '/newdispense',
+      name: 'DispenseForm',
+      component: DispenseForm
     },
     {
       path: '/drapes',
@@ -78,6 +91,11 @@ export default new Router({
       path: '/staffs',
       name: 'StaffList',
       component: StaffList
+    },
+    {
+      path: '/stores',
+      name: 'StoreList',
+      component: StoreList
     },
     {
       path: '/about',

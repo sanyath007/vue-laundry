@@ -6,7 +6,7 @@
       </div>
       <div class="card-content">
         <span class="card-title">{{ item.name }}</span>
-        <p>{{ item.desc }}</p>
+        <!--<p>{{ item.desc }}</p>-->
 
         <div class="row">
           <div class="col-md-6">

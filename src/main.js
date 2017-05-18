@@ -8,10 +8,20 @@ import router from './router'
 // import 'vue-event-calendar/dist/style.css' // ^1.1.10, CSS has been extracted as one file, so you can easily update it.
 // import vueEventCalendar from 'vue-event-calendar'
 
-Vue.config.productionTip = false
+import * as VueGoogleMaps from 'vue2-google-maps'
+
+// v: 'OPTIONAL VERSION NUMBER',
+// libraries: 'places', //// If you need to use place input
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyBvqBvfOW8J97YbV8wbTvgRbKHA2HPgKvQ'
+  }
+})
 
 /** Use event calendar and set default language */
 // Vue.use(vueEventCalendar, {locale: 'en'}) // locale can be 'zh' or 'en'
+
+Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({

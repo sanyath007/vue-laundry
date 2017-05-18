@@ -61,15 +61,17 @@ export default {
   methods: {
     signin () {
       axios.post('http://localhost/laravel-pos/public/api/auth', {
-        email: this.user.email,
-        password: this.user.password
+        person_username: this.user.email,
+        person_password: this.user.password
       }, {
         headers: {'X-Requested-With': 'XMLHttpRequest'}
       })
       .then(
         (response) => {
           const token = response.data.token
+          const useronline = response.data.useronline
           localStorage.setItem('token', token)
+          localStorage.setItem('useronline', useronline)
 
           this.errors.email.hasError = false
           this.errors.email.hasSuccess = true

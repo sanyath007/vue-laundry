@@ -7,12 +7,6 @@
 
     <div class="row">
       <div class="col-md-12">
-        <router-link to="/newbring" class="btn btn-primary">เพิ่มรายการเบิก</router-link>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-12">
         <h3 class="app-title">{{ title }}</h3>
 
         <table class="table table-strips table-hover">
@@ -24,7 +18,7 @@
               <th>หน่วยงาน</th>
               <th style="text-align: center;">สถานะ</th>
               <th style="text-align: center; width: 8%;">รายการ</th>
-              <th style="text-align: center; width: 12%;">Actions</th>
+              <th style="text-align: center; width: 8%;">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -46,15 +40,9 @@
                   </li>
                 </ul>-->
               </td>
-              <td style="text-align: left;">
-                <a @click.prevent="editBring(bring.id)" class="btn btn-warning">
-                  <i class="fa fa-edit" aria-hidden="true"></i>
-                </a>
-                <a @click.prevent="deleteBring(bring.id)" class="btn btn-danger" v-show="bring.bring_status !== 3">
-                  <i class="fa fa-remove" aria-hidden="true"></i>
-                </a>
-                <a @click.prevent="reBring(bring.id)" class="btn btn-default" v-show="bring.bring_status === 3">
-                  <i class="fa fa-reply" aria-hidden="true"></i>
+              <td style="text-align: center;">
+                <a @click.prevent="dispensing(bring, bring.bring_detail)" class="btn btn-success">
+                  <i class="fa fa-paper-plane" aria-hidden="true"></i>
                 </a>
               </td>
             </tr>
@@ -96,15 +84,19 @@
     </div>
 
     <!--Modal show cart detail-->
-    <info-dialog :isShow="showDialog" :contents="bringDetails" :options="modalOptions" @showToggle="modalToggle">
-    </info-dialog>
+    <dispense-dialog :isShow="showDialog"
+                     :contents="bringDetails" 
+                     :options="modalOptions" 
+                     @actionSave="saveDispense" 
+                     @showToggle="modalToggle">
+    </dispense-dialog>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 // import _ from 'lodash'
-import InfoDialog from '../Utils/info-dialog'
+import DispenseDialog from '../Utils/dispense-dialog'
 import '../../../node_modules/toastr/build/toastr.min.js'
 
 var $ = window.jQuery = require('jquery')
@@ -115,9 +107,10 @@ export default {
   props: [ 'users' ],
   data () {
     return {
-      title: 'รายการเบิก',
+      title: 'รายการจ่ายผ้า',
       brings: [],
       bringDetails: [],
+      bringDispense: {},
       tmpBrings: [],
       pager: {},
       filterKey: '',
@@ -130,7 +123,7 @@ export default {
     }
   },
   components: {
-    'info-dialog': InfoDialog
+    'dispense-dialog': DispenseDialog
   },
   created: function () {
     this.getBrings()
@@ -190,42 +183,6 @@ export default {
         }
       })
     },
-    editBring (_id) {
-      console.log(_id)
-      toastr.info('Edit set ID :' + _id)
-    },
-    deleteBring (_id) {
-      if (confirm('Are you sure to delete ID : ' + _id + ' ?')) {
-        const token = localStorage.getItem('token')
-        axios.put('http://localhost/laravel-pos/public/api/bringcancel/' + _id + '?token=' + token, {})
-        .then(
-          (response) => {
-            console.log(response)
-            toastr.success(response.data.text)
-            this.getBrings()
-          }
-        )
-        .catch(
-          (error) => console.log(error)
-        )
-      }
-    },
-    reBring (_id) {
-      if (confirm('Are you sure to return ID : ' + _id + ' to new bring ?')) {
-        const token = localStorage.getItem('token')
-        axios.put('http://localhost/laravel-pos/public/api/bringreturn/' + _id + '?token=' + token, {})
-        .then(
-          (response) => {
-            console.log(response)
-            toastr.success(response.data.text)
-            this.getBrings()
-          }
-        )
-        .catch(
-          (error) => console.log(error)
-        )
-      }
-    },
     renderListView (_page) {
       var name = this.filterKey
       // const token = localStorage.getItem('token')
@@ -267,6 +224,37 @@ export default {
       } else {
         this.bringDetails = []
       }
+    },
+    dispensing (_bring, _items) {
+      this.modalToggle(_items)
+      this.modalOptions.title = 'รายการเบิกทั้งหมด'
+      this.modalOptions.tbActions = false
+      this.modalOptions.btnSave = true
+
+      this.bringDispense = _bring
+    },
+    saveDispense (_item) {
+      console.log(_item)
+      if (_item.length === 0) {
+        toastr.warning('คุณยังไม่ได้เลือกรายการ !!!')
+      } else {
+        if (confirm('Confirm to dispense ID : ' + _item[0].id + ' ?')) {
+          // const token = localStorage.getItem('token')
+          // axios.put('http://localhost/laravel-pos/public/api/bringcancel/' + _item.id + '?token=' + token, {})
+          // .then(
+          //   (response) => {
+          //     console.log(response)
+          //     toastr.success(response.data.text)
+          //     this.getBrings()
+          //   }
+          // )
+          // .catch(
+          //   (error) => console.log(error)
+          // )
+
+          this.bringDispense = {}
+        }
+      }
     }
   }
 }
@@ -276,5 +264,9 @@ export default {
   /*Add "scoped" attribute to limit CSS to this component only */
 
   @import '../../../node_modules/toastr/build/toastr.min.css';
+
+  .app-title {
+    margin: 5px;
+  }
 
 </style>

@@ -4,7 +4,7 @@
       <div class="col-md-12">
         <h3 class="app-title">{{ title }}</h3>
         <ul>
-          <li v-for="user in users">{{user.name}}</li>
+          <li v-for="user in users">{{ user.person_firstname }} {{ user.person_lastname }}</li>
         </ul>
       </div>
     </div>
@@ -23,10 +23,12 @@ export default {
     }
   },
   methods: {
-    signup () {
+    getUsers () {
       axios.get('http://localhost/laravel-pos/public/api/users', {})
       .then(
-        (response) => console.log(response)
+        (response) => {
+          console.log(response)
+        }
       )
       .catch(
         (error) => console.log(error)

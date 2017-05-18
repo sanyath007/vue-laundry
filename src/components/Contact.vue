@@ -23,7 +23,7 @@
                 <textarea class="form-control" rows="5" cols=""></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary">Send</button>
+            <button type="submit" class="btn btn-primary" @click.prevent="sendMessage">Send</button>
         </form>
     </div>
 </template>
@@ -39,7 +39,7 @@ export default {
     }
   },
   methods: {
-    signup () {
+    sendMessage () {
       axios.post('http://localhost/laravel-pos/public/products', {
         name: this.name,
         email: this.email,

@@ -62,16 +62,6 @@
           <h3>รายการผ้า</h3>
           <hr>
 
-          <!--เลือกประเภทและ Filter รายการผ้าตามประเภทที่เลือก-->
-          <!--<div class="form-group has-feedback">
-            <label class="control-label" for="ประเภท">ประเภท :</label>
-            <select id="drapeType" class="form-control css-require" @change="getNameFromDrapeType($event)">
-              <option value="">-- กรุณาเลือก --</option>
-              <option :value="type.drape_type_id" v-for="type in drapeTypes">{{ type.drape_type_name }}</option>
-            </select>
-            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-          </div>-->
-
           <div class="row">
             <card-list v-for="drape in drapes" :key="drape.id" :item="drape" @addItem="addItem"></card-list>
           </div>
@@ -97,11 +87,11 @@ import '../../../node_modules/toastr/build/toastr.min.js'
 var toastr = window.toastr = require('toastr')
 
 export default {
-  name: 'bring-form',
+  name: 'store-list',
   props: [ 'users' ],
   data () {
     return {
-      title: 'เพิ่มรายการเบิก',
+      title: 'รายการ Stock ผ้า',
       userOnline: {},
       userDepartment: {},
       departments: {},
